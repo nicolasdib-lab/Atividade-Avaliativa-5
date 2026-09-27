@@ -180,11 +180,11 @@ QM_{\text{dentro}} =
 <h2></h2>
 <table class="caption-top">
 <colgroup>
-<col style="width: 33%">
-<col style="width: 8%">
-<col style="width: 8%">
-<col style="width: 8%">
-<col style="width: 39%">
+<col style="width: 22%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 28%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -222,49 +222,31 @@ QM_{\text{dentro}} =
 <li>Homogeneidade das variâncias entre os grupos.</li>
 </ul>
 <p>A terceira condição significa assumir que:</p>
-<p><span class="math display">\[
-\sigma_1^2=\sigma_2^2=\cdots=\sigma_k^2=\sigma^2
-\]</span></p>
+<p><span class="math display">\[\sigma_1^2=\sigma_2^2=\cdots=\sigma_k^2=\sigma^2\]</span></p>
 </section>
 <section id="onde-é-utilizada-a-homogeneidade-das-variâncias" class="slide level2">
 <h2>Onde é utilizada a homogeneidade das variâncias?</h2>
-<p>A homogeneidade das variâncias aparece diretamente no cálculo do erro da ANOVA. O quadrado médio dentro dos grupos, <span class="math display">\[
-QM_{\text{dentro}}=\frac{SQ_{\text{dentro}}}{N-k}
-\]</span> é utilizado como uma estimativa comum da variância populacional <span class="math inline">\(\sigma^{2}\)</span>.</p>
+<p>A homogeneidade das variâncias aparece diretamente no cálculo do erro da ANOVA. O quadrado médio dentro dos grupos, <span class="math display">\[QM_{\text{dentro}}=\frac{SQ_{\text{dentro}}}{N-k}\]</span> é utilizado como uma estimativa comum da variância populacional <span class="math inline">\(\sigma^{2}\)</span>.</p>
 </section>
 <section id="teste-de-tukey" class="slide level2 scrollable">
 <h2>Teste de Tukey</h2>
 <p>O teste de Tukey é utilizado <strong>após a ANOVA</strong> quando rejeitamos <span class="math inline">\(H_0\)</span>, para identificar <strong>quais médias diferem entre si</strong>.</p>
 <p>Para cada par de tratamentos, calcula-se:</p>
-<p><span class="math display">\[
-|\bar{X}_i-\bar{X}_j|
-\]</span></p>
-<p>O valor crítico da distribuição do <strong>Tukey</strong> é: <span class="math display">\[
-q_{\text{crítico}}
+<p><span class="math display">\[|\bar{X}_i-\bar{X}_j|\]</span></p>
+<p>O valor crítico da distribuição do <strong>Tukey</strong> é: <span class="math display">\[q_{\text{crítico}}
 =
 q_{\alpha;k;gl_{dentro}}
-\sqrt{\frac{QM_{dentro}}{n}}
-\]</span></p>
+\sqrt{\frac{QM_{dentro}}{n}}\]</span></p>
 <p>Depois, comparamos <span class="math inline">\(|\bar{X}_i-\bar{X}_j|\)</span> com o valor crítico:</p>
-<p><span class="math display">\[
-|\bar{X}_i-\bar{X}_j| &gt; q_{\text{crítico}}
-\]</span></p>
-<p><span class="math display">\[
-\Rightarrow \text{as duas médias são significativamente diferentes.}
-\]</span></p>
+<p><span class="math display">\[|\bar{X}_i-\bar{X}_j| &gt; q_{\text{crítico}}\]</span></p>
+<p><span class="math display">\[\Rightarrow \text{as duas médias são significativamente diferentes.}\]</span></p>
 <p>Enquanto:</p>
-<p><span class="math display">\[
-|\bar{X}_i-\bar{X}_j| \leq q_{\text{crítico}}
-\]</span></p>
-<p><span class="math display">\[
-\Rightarrow \text{não há evidência de diferença significativa entre as duas médias.}
-\]</span></p>
+<p><span class="math display">\[|\bar{X}_i-\bar{X}_j| \leq q_{\text{crítico}}\]</span></p>
+<p><span class="math display">\[\Rightarrow \text{não há evidência de diferença significativa entre as duas médias.}\]</span></p>
 </section>
 <section id="heterocedasticidade" class="slide level2">
 <h2>Heterocedasticidade</h2>
-<p>Quando: <span class="math display">\[
-\sigma_1^2\neq\sigma_2^2\neq\cdots\neq\sigma_k^2,
-\]</span> Temos heterogeneidade de variâncias. Esse problema pode tornar a ANOVA clássica inadequada, nessas situações, uma alternativa é utilizar a ANOVA de Welch, que não exige a igualdade das variâncias.</p>
+<p>Quando: <span class="math display">\[\sigma_1^2\neq\sigma_2^2\neq\cdots\neq\sigma_k^2,\]</span> Temos heterogeneidade de variâncias. Esse problema pode tornar a ANOVA clássica inadequada, nessas situações, uma alternativa é utilizar a ANOVA de Welch, que não exige a igualdade das variâncias.</p>
 </section></section>
 <section>
 <section id="anova-de-welch" class="title-slide slide level1 center">
@@ -295,33 +277,24 @@ q_{\alpha;k;gl_{dentro}}
 <h2>2. Formulação</h2>
 <p>Para <span class="math inline">\(k\)</span> grupos, com média <span class="math inline">\(\bar{x}_i\)</span>, variância <span class="math inline">\(s_i^2\)</span> e tamanho <span class="math inline">\(n_i\)</span>:</p>
 <h3 id="pesos">Pesos</h3>
-<p><span class="math display">\[
-w_i=\frac{n_i}{s_i^2}
-\]</span></p>
+<p><span class="math display">\[w_i=\frac{n_i}{s_i^2}\]</span></p>
 <h3 id="média-ponderada">Média ponderada</h3>
-<p><span class="math display">\[
-\bar{x}_w=
+<p><span class="math display">\[\bar{x}_w=
 \frac{\sum_{i=1}^{k}w_i\bar{x}_i}
-{\sum_{i=1}^{k}w_i}
-\]</span></p>
+{\sum_{i=1}^{k}w_i}\]</span></p>
 <p>Os pesos refletem a <strong>precisão</strong> de cada média: grupos maiores e/ou menos variáveis recebem maior peso.</p>
 </section>
 <section id="estatística-de-welch" class="slide level2 scrollable">
 <h2>3. Estatística de Welch</h2>
 <p>Temos:</p>
-<p><span class="math display">\[
-W=\sum_{i=1}^{k}w_i
-\]</span></p>
+<p><span class="math display">\[W=\sum_{i=1}^{k}w_i\]</span></p>
 <p>e</p>
-<p><span class="math display">\[
-A=
+<p><span class="math display">\[A=
 \sum_{i=1}^{k}
 \frac{1}{n_i-1}
-\left(1-\frac{w_i}{W}\right)^2
-\]</span></p>
+\left(1-\frac{w_i}{W}\right)^2\]</span></p>
 <p>A estatística pode ser escrita como:</p>
-<p><span class="math display">\[
-F_W=
+<p><span class="math display">\[F_W=
 \frac{
 \displaystyle
 \frac{1}{k-1}
@@ -331,27 +304,18 @@ F_W=
 \displaystyle
 1+
 \frac{2(k-2)}{k^2-1}A
-}
-\]</span></p>
+}\]</span></p>
 <p>Os graus de liberdade são:</p>
-<p><span class="math display">\[
-df_1=k-1
-\]</span></p>
-<p><span class="math display">\[
-df_2=
-\frac{k^2-1}{3A}
-\]</span></p>
+<p><span class="math display">\[df_1=k-1\]</span></p>
+<p><span class="math display">\[df_2=
+\frac{k^2-1}{3A}\]</span></p>
 <p>O <strong>p-valor</strong> é obtido comparando <span class="math inline">\(F_W\)</span> com uma distribuição <span class="math inline">\(F\)</span> com <span class="math inline">\(df_1\)</span> e <span class="math inline">\(df_2\)</span> graus de liberdade.</p>
 </section>
 <section id="interpretação" class="slide level2">
 <h2>4. Interpretação</h2>
 <p><strong>Hipóteses:</strong></p>
-<p><span class="math display">\[
-H_0:\mu_1=\mu_2=\cdots=\mu_k
-\]</span></p>
-<p><span class="math display">\[
-H_1:\text{pelo menos uma média difere}
-\]</span></p>
+<p><span class="math display">\[H_0:\mu_1=\mu_2=\cdots=\mu_k\]</span></p>
+<p><span class="math display">\[H_1:\text{pelo menos uma média difere}\]</span></p>
 <ul>
 <li><strong>p pequeno:</strong> evidência contra <span class="math inline">\(H_0\)</span>.</li>
 <li><strong>p grande:</strong> não há evidência suficiente para rejeitar <span class="math inline">\(H_0\)</span>.</li>
@@ -391,30 +355,24 @@ H_1:\text{pelo menos uma média difere}
 <li>tamanhos amostrais: <span class="math inline">\(n_i,n_j\)</span></li>
 </ul>
 <p>A diferença entre as médias é:</p>
-<p><span class="math display">\[
-\Delta_{ij}=\bar{x}_i-\bar{x}_j
-\]</span></p>
+<p><span class="math display">\[\Delta_{ij}=\bar{x}_i-\bar{x}_j\]</span></p>
 <p>O erro-padrão da diferença é:</p>
-<p><span class="math display">\[
-SE_{ij}
+<p><span class="math display">\[SE_{ij}
 =
 \sqrt{
 \frac{s_i^2}{n_i}
 +
 \frac{s_j^2}{n_j}
-}
-\]</span></p>
+}\]</span></p>
 <p>Assim, a estatística padronizada é:</p>
-<p><span class="math display">\[
-q_{ij}
+<p><span class="math display">\[q_{ij}
 =
 \frac{|\bar{x}_i-\bar{x}_j|}
 {\sqrt{
 \frac{s_i^2}{n_i}
 +
 \frac{s_j^2}{n_j}
-}}
-\]</span></p>
+}}\]</span></p>
 <blockquote>
 <p>Diferentemente de Tukey, <strong>não aparece uma única estimativa de variância comum</strong>.</p>
 </blockquote>
@@ -422,8 +380,7 @@ q_{ij}
 <section id="graus-de-liberdade-de-welchsatterthwaite" class="slide level2">
 <h2>3. Graus de liberdade de Welch–Satterthwaite</h2>
 <p>Como as variâncias são tratadas separadamente, os graus de liberdade são calculados para <strong>cada par</strong>:</p>
-<p><span class="math display">\[
-\nu_{ij}
+<p><span class="math display">\[\nu_{ij}
 =
 \frac{
 \left(
@@ -439,44 +396,37 @@ q_{ij}
 \frac{
 \left(\frac{s_j^2}{n_j}\right)^2
 }{n_j-1}
-}
-\]</span></p>
+}\]</span></p>
 <p><strong>Cada comparação pode ter seus próprios graus de liberdade.</strong></p>
 </section>
 <section id="distribuição-do-teste" class="slide level2">
 <h2>4. Distribuição do teste</h2>
 <p>O Games–Howell utiliza a <strong>distribuição do range studentizado</strong> (<em>studentized range</em>), representada por <span class="math inline">\(q\)</span>.</p>
 <p>Para cada par <span class="math inline">\((i,j)\)</span>:</p>
-<p><span class="math display">\[
-q_{ij}
+<p><span class="math display">\[q_{ij}
 =
 \frac{|\bar{x}_i-\bar{x}_j|}
 {\sqrt{
 \frac{s_i^2}{n_i}
 +
 \frac{s_j^2}{n_j}
-}}
-\]</span></p>
+}}\]</span></p>
 <p>e a decisão é baseada em:</p>
-<p><span class="math display">\[
-q_{ij}
+<p><span class="math display">\[q_{ij}
 &gt;
-q_{\alpha;\,k,\,\nu_{ij}}
-\]</span></p>
+q_{\alpha;\,k,\,\nu_{ij}}\]</span></p>
 </section>
 <section id="intervalo-de-confiança" class="slide level2">
 <h2>5. Intervalo de confiança</h2>
 <p>Para a diferença <span class="math inline">\(\mu_i-\mu_j\)</span>, o intervalo pode ser expresso como:</p>
-<p><span class="math display">\[
-(\bar{x}_i-\bar{x}_j)
+<p><span class="math display">\[(\bar{x}_i-\bar{x}_j)
 \pm
 q_{\alpha;\,k,\,\nu_{ij}}^{*}
 \sqrt{
 \frac{s_i^2}{n_i}
 +
 \frac{s_j^2}{n_j}
-}
-\]</span></p>
+}\]</span></p>
 </section></section>
 <section id="referências" class="title-slide slide level1 center">
 <h1>Referências</h1>
