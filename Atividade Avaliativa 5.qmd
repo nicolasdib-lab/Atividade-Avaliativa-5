@@ -1,0 +1,405 @@
+---
+title: "**PRÁTICA ESTATÍSTICA II**"
+subtitle: "**ATIVIDADE AVALIATIVA 5**"
+author: "Nicolas Dib Gremião Nascimento <br> Filipe de Carvalho Sant Anna"
+date: today
+date-format: "DD/MM/YYYY"
+institute: "Universidade Federal Fluminense"
+format:
+  revealjs:
+    css: custom.css
+    slide-number: true
+    incremental: false
+    transition: none
+    width: 1280
+    height: 720
+    margin: 0.07
+---
+
+# Contexto
+
+## ANOVA clássica
+
+A **ANOVA (Analysis of Variance)** é um procedimento estatístico utilizado para testar se as médias de três ou mais populações são iguais.
+
+::: box-blue
+
+$$H_0:\ \mu_1 = \mu_2 = \cdots = \mu_k$$
+
+$$H_1:\ \text{pelo menos uma das médias é diferente}$$
+:::
+
+## Ideia
+
+A ideia central é comparar a **variabilidade entre os grupos** com a **variabilidade dentro dos grupos**.
+
+$$\boxed{
+F = \frac{QM_{\text{entre}}}{QM_{\text{dentro}}}
+}$$
+
+
+onde:
+
+$$QM_{\text{entre}} =
+\frac{SQ_{\text{entre}}}{k-1}
+\qquad\text{e}\qquad
+QM_{\text{dentro}} =
+\frac{SQ_{\text{dentro}}}{N-k}$$
+
+
+##
+| Fonte de variação | SQ | gl's | QM | Estatística de teste |
+|:------------------|:---:|:---:|:---:|:--------------------:|
+| **Tratamento / Entre** | $SQ_{\text{entre}}$ | $k-1$ | $QM_{\text{entre}}$ | $F = \frac{QM_{\text{entre}}}{QM_{\text{dentro}}} \sim F_{k-1;\,N-k}$ |
+| **Resíduo / Dentro** | $SQ_{\text{dentro}}$ | $N-k$ | $QM_{\text{dentro}}$ | |
+
+## Suposições da ANOVA clássica
+
+A ANOVA tradicional pressupõe principalmente:
+
+- Independência das observações;
+- Normalidade dos erros/resíduos;
+- Homogeneidade das variâncias entre os grupos.
+
+A terceira condição significa assumir que:
+
+$$
+\sigma_1^2=\sigma_2^2=\cdots=\sigma_k^2=\sigma^2
+$$
+
+## Onde é utilizada a homogeneidade das variâncias?
+A homogeneidade das variâncias aparece diretamente no cálculo do erro da ANOVA.
+O quadrado médio dentro dos grupos,
+$$
+QM_{\text{dentro}}=\frac{SQ_{\text{dentro}}}{N-k}
+$$
+é utilizado como uma estimativa comum da variância populacional $\sigma^{2}$.
+
+
+ 
+
+## Teste de Tukey {.scrollable}
+
+O teste de Tukey é utilizado **após a ANOVA** quando rejeitamos
+$H_0$, para identificar **quais médias diferem entre si**.
+
+
+
+Para cada par de tratamentos, calcula-se:
+
+$$
+|\bar{X}_i-\bar{X}_j|
+$$
+
+
+
+
+
+O valor crítico da distribuição do **Tukey** é:
+$$
+q_{\text{crítico}}
+=
+q_{\alpha;k;gl_{dentro}}
+\sqrt{\frac{QM_{dentro}}{n}}
+$$
+
+
+Depois, comparamos $|\bar{X}_i-\bar{X}_j|$ com o valor crítico:
+
+
+$$
+|\bar{X}_i-\bar{X}_j| > q_{\text{crítico}}
+$$
+
+$$
+\Rightarrow \text{as duas médias são significativamente diferentes.}
+$$
+
+Enquanto:
+
+$$
+|\bar{X}_i-\bar{X}_j| \leq q_{\text{crítico}}
+$$
+
+$$
+\Rightarrow \text{não há evidência de diferença significativa entre as duas médias.}
+$$
+
+## Heterocedasticidade
+Quando:
+$$
+\sigma_1^2\neq\sigma_2^2\neq\cdots\neq\sigma_k^2,
+$$
+Temos heterogeneidade de variâncias.
+Esse problema pode tornar a ANOVA clássica inadequada, nessas situações, uma alternativa é utilizar a ANOVA de Welch, que não exige a igualdade das variâncias.
+
+
+# ANOVA de Welch
+
+## 1. O que muda em relação à ANOVA clássica? 
+
+:::: columns
+
+::: {.column width="50%"}
+**ANOVA clássica:**
+
+- Assume **homocedasticidade**:  
+  $$\sigma_1^2=\sigma_2^2=\cdots=\sigma_k^2$$
+:::
+
+::: {.column width="50%"}
+**ANOVA de Welch:**
+
+- **Não exige variâncias iguais**.
+- Dá maior peso aos grupos com **menor variância e maior tamanho amostral**.
+:::
+
+::::
+
+> **Ideia central:** quando as variâncias diferem entre os grupos, a Welch evita que a heterocedasticidade distorça excessivamente o teste de igualdade das médias.
+
+
+
+## 2. Formulação
+
+Para $k$ grupos, com média $\bar{x}_i$, variância $s_i^2$ e tamanho $n_i$:
+
+### Pesos
+
+$$
+w_i=\frac{n_i}{s_i^2}
+$$
+
+### Média ponderada
+
+$$
+\bar{x}_w=
+\frac{\sum_{i=1}^{k}w_i\bar{x}_i}
+{\sum_{i=1}^{k}w_i}
+$$
+
+Os pesos refletem a **precisão** de cada média: grupos maiores e/ou menos variáveis recebem maior peso.
+
+
+
+## 3. Estatística de Welch {.scrollable}
+
+Temos:
+
+$$
+W=\sum_{i=1}^{k}w_i
+$$
+
+e
+
+$$
+A=
+\sum_{i=1}^{k}
+\frac{1}{n_i-1}
+\left(1-\frac{w_i}{W}\right)^2
+$$
+
+A estatística pode ser escrita como:
+
+$$
+F_W=
+\frac{
+\displaystyle
+\frac{1}{k-1}
+\sum_{i=1}^{k}w_i
+(\bar{x}_i-\bar{x}_w)^2
+}{
+\displaystyle
+1+
+\frac{2(k-2)}{k^2-1}A
+}
+$$
+
+Os graus de liberdade são:
+
+$$
+df_1=k-1
+$$
+
+$$
+df_2=
+\frac{k^2-1}{3A}
+$$
+
+O **p-valor** é obtido comparando $F_W$ com uma distribuição $F$ com
+$df_1$ e $df_2$ graus de liberdade.
+
+---
+
+## 4. Interpretação
+
+**Hipóteses:**
+
+$$
+H_0:\mu_1=\mu_2=\cdots=\mu_k
+$$
+
+$$
+H_1:\text{pelo menos uma média difere}
+$$
+
+- **p pequeno:** evidência contra $H_0$.
+- **p grande:** não há evidência suficiente para rejeitar $H_0$.
+- Se o teste for significativo, teste **Games–Howell**, podem identificar quais grupos diferem.
+
+# Teste de Games–Howell
+
+## 1. O que muda em relação ao teste de Tukey?
+
+:::: columns
+
+::: {.column width="50%"}
+**Tukey:**
+
+- Pressupõe **homogeneidade das variâncias**:
+  $$\sigma_1^2=\sigma_2^2=\cdots=\sigma_k^2$$
+:::
+
+:::{.column width="50%"}
+**Games–Howell:**
+
+- **Não exige variâncias iguais**.
+- Permite **tamanhos amostrais diferentes**.
+- Usa a variância de **cada grupo individualmente**.
+- Utiliza **graus de liberdade específicos para cada comparação**.
+- É particularmente apropriado como *post hoc* após a **ANOVA de Welch**.
+:::
+
+::::
+
+
+
+
+## 2. Comparação entre dois grupos {.scrollable}
+
+Para comparar os grupos $i$ e $j$, considere:
+
+- médias: $\bar{x}_i,\bar{x}_j$
+- variâncias: $s_i^2,s_j^2$
+- tamanhos amostrais: $n_i,n_j$
+
+A diferença entre as médias é:
+
+$$
+\Delta_{ij}=\bar{x}_i-\bar{x}_j
+$$
+
+O erro-padrão da diferença é:
+
+$$
+SE_{ij}
+=
+\sqrt{
+\frac{s_i^2}{n_i}
++
+\frac{s_j^2}{n_j}
+}
+$$
+
+Assim, a estatística padronizada é:
+
+$$
+q_{ij}
+=
+\frac{|\bar{x}_i-\bar{x}_j|}
+{\sqrt{
+\frac{s_i^2}{n_i}
++
+\frac{s_j^2}{n_j}
+}}
+$$
+
+> Diferentemente de Tukey, **não aparece uma única estimativa de variância comum**.
+
+---
+
+## 3. Graus de liberdade de Welch–Satterthwaite
+
+Como as variâncias são tratadas separadamente, os graus de liberdade são calculados para **cada par**:
+
+$$
+\nu_{ij}
+=
+\frac{
+\left(
+\frac{s_i^2}{n_i}
++
+\frac{s_j^2}{n_j}
+\right)^2
+}{
+\frac{
+\left(\frac{s_i^2}{n_i}\right)^2
+}{n_i-1}
++
+\frac{
+\left(\frac{s_j^2}{n_j}\right)^2
+}{n_j-1}
+}
+$$
+
+
+**Cada comparação pode ter seus próprios graus de liberdade.**
+
+---
+
+## 4. Distribuição do teste
+
+O Games–Howell utiliza a **distribuição do range studentizado** (*studentized range*), representada por $q$.
+
+Para cada par $(i,j)$:
+
+$$
+q_{ij}
+=
+\frac{|\bar{x}_i-\bar{x}_j|}
+{\sqrt{
+\frac{s_i^2}{n_i}
++
+\frac{s_j^2}{n_j}
+}}
+$$
+
+e a decisão é baseada em:
+
+$$
+q_{ij}
+>
+q_{\alpha;\,k,\,\nu_{ij}}
+$$
+
+
+
+## 5. Intervalo de confiança
+
+Para a diferença $\mu_i-\mu_j$, o intervalo pode ser expresso como:
+
+$$
+(\bar{x}_i-\bar{x}_j)
+\pm
+q_{\alpha;\,k,\,\nu_{ij}}^{*}
+\sqrt{
+\frac{s_i^2}{n_i}
++
+\frac{s_j^2}{n_j}
+}
+$$
+
+
+# Referências
+
+- MetricGate. **Tukey's Honestly Significant Difference (HSD) Test**  
+  https://metricgate.com/docs/tukey-hsd-test/
+
+- MetricGate. **Welch ANOVA for Unequal Variances Calculator**  
+  https://metricgate.com/docs/welch-anova/
+
+- MetricGate. **Games-Howell Post-Hoc Test for Unequal Variances Calculator**  
+  https://metricgate.com/docs/games-howell-test/
+
+- MetricGate. **One-Way ANOVA**  
+  https://metricgate.com/docs/one-way-anova/
